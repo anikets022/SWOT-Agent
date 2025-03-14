@@ -5,6 +5,60 @@
 import streamlit as st
 st.set_page_config(page_title="SWOT Analysis Agent", page_icon="📊", layout="wide")
 
+# Custom CSS styling for improved visuals without affecting markdown rendering
+st.markdown("""
+    <style>
+        .stApp {
+            background-color: #f9f9f9;
+        }
+        .stSidebar {
+            background-color: #f0f8ff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        /* Custom styles for SWOT blocks */
+        .swot-strengths {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            color: #155724;
+        }
+        .swot-weaknesses {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            color: #721c24;
+        }
+        .swot-opportunities {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 10px;
+            border-radius: 5px;
+            color: #0c5460;
+        }
+        .swot-threats {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 10px;
+            border-radius: 5px;
+            color: #856404;
+        }
+        /* Button styling */
+        .stButton > button {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .stButton > button:hover {
+            background-color: #1a242f;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Import necessary libraries
 import os
 import google.generativeai as genai
@@ -12,9 +66,6 @@ import langchain
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.docstore.document import Document
-from langchain.chains.summarize import load_summarize_chain
 import tiktoken
 import re
 import io
@@ -23,17 +74,21 @@ from pdfminer.high_level import extract_text
 # Application title and description
 st.title("🔍 SWOT Analysis Agent")
 st.write("Upload a file (.txt or .pdf) or enter text below to generate a SWOT Analysis:")
-st.caption("The objective of this LLM-based Agent is to conduct comprehensive internal and external analyses of a given company using the SWOT framework, delivering a structured output that highlights strengths, weaknesses, opportunities, and threats.")
+st.caption("This LLM-based Agent performs comprehensive internal and external analyses using the SWOT framework, delivering structured insights on strengths, weaknesses, opportunities, and threats.")
 
+# Sidebar: Display token usage at the top, then library versions (in new order)
+st.sidebar.markdown("### Token Usage")
+st.sidebar.markdown(f"**Total Tokens Consumed:** {st.session_state.get('tokens_consumed', 0)}")
+st.sidebar.markdown(f"**Query Tokens:** {st.session_state.get('query_tokens', 0)}")
+st.sidebar.markdown(f"**Response Tokens:** {st.session_state.get('response_tokens', 0)}")
 
-# Display library versions in the sidebar
 st.sidebar.markdown("### Library Versions")
-st.sidebar.markdown(f"google.generativeai: {genai.__version__}")
-st.sidebar.markdown(f"streamlit: {st.__version__}")
-st.sidebar.markdown(f"tiktoken: {tiktoken.__version__}")
-st.sidebar.markdown(f"langchain: {langchain.__version__}")
+st.sidebar.markdown(f"**streamlit:** {st.__version__}")
+st.sidebar.markdown(f"**langchain:** {langchain.__version__}")
+st.sidebar.markdown(f"**google.generativeai:** {genai.__version__}")
+st.sidebar.markdown(f"**tiktoken:** {tiktoken.__version__}")
 
-# Initialize token counters in session state
+# Initialize token counters in session state if not present
 if 'tokens_consumed' not in st.session_state:
     st.session_state.tokens_consumed = 0
 if 'query_tokens' not in st.session_state:
@@ -155,9 +210,6 @@ def remove_single_asterisks(text: str) -> str:
     return re.sub(r"^\*\s+", "", text, flags=re.MULTILINE)
 
 def parse_subheading_bullets(text: str):
-    """
-    Finds lines that begin with '* ' or '- ' and returns them.
-    """
     lines = re.findall(r"^(?:\*|-)\s+(.*)", text, flags=re.MULTILINE)
     return [line.strip() for line in lines] if lines else [text.strip()]
 
@@ -176,7 +228,7 @@ if file_type == "Upload File":
                         st.text(text[:1000] + ("..." if len(text) > 1000 else ""))
                 else:
                     st.error("Failed to extract text from the PDF.")
-        else:  # txt file
+        else:
             text = uploaded_file.read().decode("utf-8")
             with st.expander("Preview uploaded text"):
                 st.text(text[:1000] + ("..." if len(text) > 1000 else ""))
@@ -214,36 +266,29 @@ if st.button("Generate SWOT Analysis"):
         for section in sections:
             swot_data[section] = [line.strip() for line in swot_blocks[section].splitlines() if line.strip()]
 
-        # Display the SWOT quadrants using Streamlit columns
+        # Display the SWOT quadrants using Streamlit columns with improved visuals
         col1, col2 = st.columns(2)
         col3, col4 = st.columns(2)
 
         with col1:
-            st.markdown("### 💪 Strengths")
-            # If no bullet points found, show the raw text
-            st.info("\n".join(swot_data.get("Strengths", [])) or swot_blocks["Strengths"])
+            st.markdown("### 🏆 Strengths")
+            content = "\n".join(swot_data.get("Strengths", [])) or swot_blocks["Strengths"]
+            st.markdown(f"<div class='swot-strengths'>{content}</div>", unsafe_allow_html=True)
         with col2:
-            st.markdown("### 🚨 Weaknesses")
-            st.warning("\n".join(swot_data.get("Weaknesses", [])) or swot_blocks["Weaknesses"])
+            st.markdown("### 🔻 Weaknesses")
+            content = "\n".join(swot_data.get("Weaknesses", [])) or swot_blocks["Weaknesses"]
+            st.markdown(f"<div class='swot-weaknesses'>{content}</div>", unsafe_allow_html=True)
         with col3:
-            st.markdown("### 🌟 Opportunities")
-            st.success("\n".join(swot_data.get("Opportunities", [])) or swot_blocks["Opportunities"])
+            st.markdown("### 💡 Opportunities")
+            content = "\n".join(swot_data.get("Opportunities", [])) or swot_blocks["Opportunities"]
+            st.markdown(f"<div class='swot-opportunities'>{content}</div>", unsafe_allow_html=True)
         with col4:
-            st.markdown("### ⚡ Threats")
-            st.error("\n".join(swot_data.get("Threats", [])) or swot_blocks["Threats"])
-
-        # Optionally, display the raw output below for reference
-        with st.expander("Show Raw SWOT Output"):
-            st.markdown(swot_output)
+            st.markdown("### ⚠️ Threats")
+            content = "\n".join(swot_data.get("Threats", [])) or swot_blocks["Threats"]
+            st.markdown(f"<div class='swot-threats'>{content}</div>", unsafe_allow_html=True)
 
     else:
         st.info("Please upload a file or enter text to generate the SWOT analysis.")
-
-# Display token usage in sidebar
-st.sidebar.markdown("### Token Usage")
-st.sidebar.markdown(f"Total Tokens Consumed: {st.session_state.tokens_consumed}")
-st.sidebar.markdown(f"Query Tokens: {st.session_state.query_tokens}")
-st.sidebar.markdown(f"Response Tokens: {st.session_state.response_tokens}")
 
 # Sidebar Insights
 st.sidebar.header("ℹ️ Insights")
@@ -260,7 +305,7 @@ if st.sidebar.button("Reset Token Counters"):
 st.markdown("""---""")
 st.markdown(
     """
-    <div style="background: linear-gradient(to right, blue, purple); padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; color: white;">
+    <div style="background: linear-gradient(to right, #34495e, #8e44ad); padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; color: white;">
         Made by Anubhav Verma<br>
         Please reach out to anubhav.verma360@gmail.com if you encounter any issues.
     </div>
