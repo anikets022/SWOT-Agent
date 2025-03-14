@@ -318,16 +318,29 @@ if st.sidebar.button("Reset Token Counters"):
 st.markdown(
     """
     <div style="
-         background: linear-gradient(to right, #27ae60, #2ecc71);
-         clip-path: polygon(50% 0%, 90% 30%, 100% 60%, 80% 100%, 20% 100%, 0% 60%, 10% 30%);
-         padding: 30px;
+         position: relative;
+         background: linear-gradient(90deg, #8e44ad, #34495e);
+         padding: 20px;
+         border-radius: 10px;
          text-align: center;
          margin-top: 20px;
          color: white;
-         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-         ">
-         <h2 style="margin: 0;">Architect: Aniket Singh</h2>
-         <p style="margin: 5px 0 0; font-size: 16px;">With the guidance of my professor Prof. Mukesh Rao Raghavendra</p>
+         font-family: 'Arial', sans-serif;">
+        <!-- Knot of the ribbon -->
+        <div style="
+             position: absolute;
+             top: -15px;
+             left: 50%;
+             transform: translateX(-50%);
+             background: #f39c12;
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             border: 3px solid white;">
+        </div>
+        <p style="margin: 10px 0 0 0; font-size: 18px;">Architect: Aniket Singh.</p>
+        <p style="margin: 5px 0 0 0; font-size: 16px;">With the guidance of my professor Prof. Mukesh Rao Raghavendra 🙏</p>
     </div>
-    """, unsafe_allow_html=True
+    """, unsafe_allow_html=True)
+
 )
