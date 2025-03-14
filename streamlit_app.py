@@ -325,7 +325,7 @@ st.markdown(
         padding: 2px;
         border-radius: 8px;
         text-align: center;
-        margin-top: 20px;
+        margin-top: 5px;
         color: white;
     }
     @keyframes gradientAnimation {
@@ -339,7 +339,7 @@ st.markdown(
     }
     .footer-content .emoji {
         font-size: 84px;
-        margin-top: 10px;
+        margin-top: 5px;
     }
     </style>
     <div class="footer">
