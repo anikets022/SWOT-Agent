@@ -304,8 +304,40 @@ if st.button("Generate SWOT Analysis"):
         st.info("Please upload a file or enter text to generate the SWOT analysis.")
 
 # Sidebar Insights
-st.sidebar.header("ℹ️ Insights")
-st.sidebar.info("📌 A SWOT quadrant helps visualize Strengths, Weaknesses, Opportunities, and Threats effectively.")
+st.sidebar.markdown("""
+    <style>
+    .insights {
+      background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eac9);
+      background-size: 400% 400%;
+      animation: gradientAnimation 10s ease infinite;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    ul.insight-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+    ul.insight-list li {
+      margin-bottom: 5px;
+    }
+    </style>
+    <div class="insights">
+      <ul class="insight-list">
+        <li>SWOT helps in analyzing internal and external factors.</li>
+        <li>Highlights the company’s core strengths.</li>
+        <li>Identifies weaknesses that need improvement.</li>
+        <li>Discovers market opportunities.</li>
+        <li>Recognizes potential threats to mitigate risks.</li>
+      </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 # Button to reset token counters
 if st.sidebar.button("Reset Token Counters"):
