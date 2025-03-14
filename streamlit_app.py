@@ -310,9 +310,9 @@ st.sidebar.markdown("""
     .insights {
       background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eac9);
       background-size: 400% 400%;
-      animation: gradientAnimation 10s ease infinite;
+      animation: gradientAnimation 6s ease infinite;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 6px;
       color: white;
     }
     @keyframes gradientAnimation {
