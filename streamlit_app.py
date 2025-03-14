@@ -315,13 +315,19 @@ if st.sidebar.button("Reset Token Counters"):
     st.sidebar.success("Token counters reset.")
 
 # Footer for Credits
-st.markdown("""---""")
 st.markdown(
     """
-    <div style="background: linear-gradient(to right, #34495e, #8e44ad); padding: 15px; border-radius: 10px; text-align: center; margin-top: 20px; color: white;">
-        Made by Anubhav Verma<br>
-        Please reach out to anubhav.verma360@gmail.com if you encounter any issues.
+    <div style="
+         background: linear-gradient(to right, #27ae60, #2ecc71);
+         clip-path: polygon(50% 0%, 90% 30%, 100% 60%, 80% 100%, 20% 100%, 0% 60%, 10% 30%);
+         padding: 30px;
+         text-align: center;
+         margin-top: 20px;
+         color: white;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         ">
+         <h2 style="margin: 0;">Architect: Aniket Singh</h2>
+         <p style="margin: 5px 0 0; font-size: 16px;">With the guidance of my professor Prof. Mukesh Rao Raghavendra</p>
     </div>
-    """, 
-    unsafe_allow_html=True
+    """, unsafe_allow_html=True
 )
