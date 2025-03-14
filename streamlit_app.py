@@ -251,7 +251,7 @@ if st.button("Generate SWOT Analysis"):
         with st.spinner('Generating SWOT Analysis... This may take a minute.'):
             swot_output = get_swot_analysis(text)
 
-            if st.button("Click for Balloons 🎉"):
+        if st.button("Click for Balloons 🎉"):
             st.balloons()
 
         # Count tokens
