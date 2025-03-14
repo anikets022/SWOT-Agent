@@ -5,67 +5,64 @@
 import streamlit as st
 st.set_page_config(page_title="SWOT Analysis Agent", page_icon="📊", layout="wide")
 
-# Custom CSS styling for improved visuals and proper text contrast
+# Custom CSS styling: Dark grey background and proper text contrast;
+# also update the styles for SWOT blocks.
 st.markdown("""
     <style>
         /* Global body text color */
         body {
-            color: #2c3e50 !important;
+            color: #ffffff !important;
         }
-        /* Change the background color of the app */
+        /* Set a dark grey background for the app */
         .stApp {
-            background-color: #f9f9f9;
+            background-color: #333333;
         }
-        /* Sidebar color changes */
-        .css-1v3fvcr {
-            background-color: #E0F7FA;
+        /* Sidebar styling */
+        .stSidebar {
+            background-color: #444444;
+            color: #ffffff;
         }
-        /* Heading colors */
         h1, h2, h3, h4, h5, h6 {
-            color: #2c3e50;
+            color: #ffffff;
         }
-        /* Custom styles for SWOT blocks */
+        /* Custom styles for SWOT blocks with contrasting text colors */
         .swot-strengths {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
+            background-color: #2ecc71;
+            border: 1px solid #27ae60;
             padding: 10px;
             border-radius: 5px;
-            color: #155724;
+            color: #ffffff;
         }
         .swot-weaknesses {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
+            background-color: #e74c3c;
+            border: 1px solid #c0392b;
             padding: 10px;
             border-radius: 5px;
-            color: #721c24;
+            color: #ffffff;
         }
         .swot-opportunities {
-            background-color: #d1ecf1;
-            border: 1px solid #bee5eb;
+            background-color: #3498db;
+            border: 1px solid #2980b9;
             padding: 10px;
             border-radius: 5px;
-            color: #0c5460;
+            color: #ffffff;
         }
         .swot-threats {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
+            background-color: #f1c40f;
+            border: 1px solid #f39c12;
             padding: 10px;
             border-radius: 5px;
-            color: #856404;
+            color: #333333;
         }
         /* Button styling */
         .stButton > button {
-            background-color: #2c3e50;
+            background-color: #555555;
             color: white;
             font-weight: bold;
             border-radius: 5px;
         }
         .stButton > button:hover {
-            background-color: #1a242f;
-        }
-        /* Expander box color */
-        .stExpander {
-            background-color: #e1f5fe;
+            background-color: #444444;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -87,7 +84,7 @@ st.title("🔍 SWOT Analysis Agent")
 st.write("Upload a file (.txt or .pdf) or enter text below to generate a SWOT Analysis:")
 st.caption("This LLM-based Agent performs comprehensive internal and external analyses using the SWOT framework, delivering structured insights on strengths, weaknesses, opportunities, and threats.")
 
-# Sidebar: Token usage on top followed by library versions
+# Sidebar: Token usage first, then library versions in the desired order
 st.sidebar.markdown("### Token Usage")
 st.sidebar.markdown(f"**Total Tokens Consumed:** {st.session_state.get('tokens_consumed', 0)}")
 st.sidebar.markdown(f"**Query Tokens:** {st.session_state.get('query_tokens', 0)}")
@@ -118,7 +115,7 @@ else:
 # Set up tiktoken for token counting
 encoder = tiktoken.get_encoding("cl100k_base")
 
-# Initialize the Gemini AI model
+# Initialize the Gemini AI model (cached)
 @st.cache_resource
 def load_llm():
     return ChatGoogleGenerativeAI(
@@ -213,7 +210,7 @@ def extract_text_from_pdf(pdf_file):
     text = extract_text(io.BytesIO(pdf_bytes))
     return text
 
-# Helper functions for processing SWOT text
+# Helper function to convert markdown bold to HTML (for output display)
 def convert_md_bold_to_html(text: str) -> str:
     return re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", text)
 
@@ -284,18 +281,23 @@ if st.button("Generate SWOT Analysis"):
         with col1:
             st.markdown("### 🏆 Strengths")
             content = "\n".join(swot_data.get("Strengths", [])) or swot_blocks["Strengths"]
+            # Convert markdown bold to HTML so stars do not appear
+            content = convert_md_bold_to_html(content)
             st.markdown(f"<div class='swot-strengths'>{content}</div>", unsafe_allow_html=True)
         with col2:
             st.markdown("### 🔻 Weaknesses")
             content = "\n".join(swot_data.get("Weaknesses", [])) or swot_blocks["Weaknesses"]
+            content = convert_md_bold_to_html(content)
             st.markdown(f"<div class='swot-weaknesses'>{content}</div>", unsafe_allow_html=True)
         with col3:
             st.markdown("### 💡 Opportunities")
             content = "\n".join(swot_data.get("Opportunities", [])) or swot_blocks["Opportunities"]
+            content = convert_md_bold_to_html(content)
             st.markdown(f"<div class='swot-opportunities'>{content}</div>", unsafe_allow_html=True)
         with col4:
             st.markdown("### ⚠️ Threats")
             content = "\n".join(swot_data.get("Threats", [])) or swot_blocks["Threats"]
+            content = convert_md_bold_to_html(content)
             st.markdown(f"<div class='swot-threats'>{content}</div>", unsafe_allow_html=True)
 
     else:
