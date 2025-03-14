@@ -320,10 +320,10 @@ st.markdown(
     <style>
     .footer {
         background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eac9);
-        background-size: 800% 800%;
-        animation: gradientAnimation 15s ease infinite;
+        background-size: 700% 700%;
+        animation: gradientAnimation 6s ease infinite;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 8px;
         text-align: center;
         margin-top: 20px;
         color: white;
