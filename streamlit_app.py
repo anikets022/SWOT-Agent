@@ -5,15 +5,22 @@
 import streamlit as st
 st.set_page_config(page_title="SWOT Analysis Agent", page_icon="📊", layout="wide")
 
-# Custom CSS styling for improved visuals without affecting markdown rendering
+# Custom CSS styling for improved visuals and proper text contrast
 st.markdown("""
     <style>
+        /* Global body text color */
+        body {
+            color: #2c3e50 !important;
+        }
+        /* Change the background color of the app */
         .stApp {
             background-color: #f9f9f9;
         }
-        .stSidebar {
-            background-color: #f0f8ff;
+        /* Sidebar color changes */
+        .css-1v3fvcr {
+            background-color: #E0F7FA;
         }
+        /* Heading colors */
         h1, h2, h3, h4, h5, h6 {
             color: #2c3e50;
         }
@@ -56,6 +63,10 @@ st.markdown("""
         .stButton > button:hover {
             background-color: #1a242f;
         }
+        /* Expander box color */
+        .stExpander {
+            background-color: #e1f5fe;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -76,7 +87,7 @@ st.title("🔍 SWOT Analysis Agent")
 st.write("Upload a file (.txt or .pdf) or enter text below to generate a SWOT Analysis:")
 st.caption("This LLM-based Agent performs comprehensive internal and external analyses using the SWOT framework, delivering structured insights on strengths, weaknesses, opportunities, and threats.")
 
-# Sidebar: Display token usage at the top, then library versions (in new order)
+# Sidebar: Token usage on top followed by library versions
 st.sidebar.markdown("### Token Usage")
 st.sidebar.markdown(f"**Total Tokens Consumed:** {st.session_state.get('tokens_consumed', 0)}")
 st.sidebar.markdown(f"**Query Tokens:** {st.session_state.get('query_tokens', 0)}")
