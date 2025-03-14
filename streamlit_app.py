@@ -339,7 +339,7 @@ st.markdown(
     }
     .footer-content .emoji {
         font-size: 84px;
-        margin-top: 20px;
+        margin-top: 30px;
     }
     </style>
     <div class="footer">
