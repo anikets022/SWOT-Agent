@@ -304,6 +304,7 @@ if st.button("Generate SWOT Analysis"):
         st.info("Please upload a file or enter text to generate the SWOT analysis.")
 
 # Sidebar Insights
+st.sidebar.header("ℹ️ Insights")
 st.sidebar.markdown("""
     <style>
     .insights {
