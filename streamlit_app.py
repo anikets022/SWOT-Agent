@@ -82,7 +82,7 @@ from pdfminer.high_level import extract_text
 # Application title and description
 st.title("👨‍🎓 SWOT Analysis Agent")
 st.write("Upload a file (File.txt or File.pdf) or enter text below to generate a detailed industry standard SWOT Analysis:")
-st.caption("Leverage AI to unlock strategic insights—revealing your company's hidden strengths, critical weaknesses, untapped opportunities, and emerging threats." 🚀)
+st.caption("Leverage AI to unlock strategic insights—revealing your company's hidden strengths, critical weaknesses, untapped opportunities, and emerging threats. 🚀")
 
 # Sidebar: Token usage first, then library versions in the desired order
 st.sidebar.markdown("### Token Usage")
