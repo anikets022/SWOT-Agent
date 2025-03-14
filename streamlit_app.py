@@ -317,29 +317,39 @@ if st.sidebar.button("Reset Token Counters"):
 # Footer for Credits
 st.markdown(
     """
-    <div style="
-         position: relative;
-         background: linear-gradient(90deg, #8e44ad, #34495e);
-         padding: 20px;
-         border-radius: 10px;
-         text-align: center;
-         margin-top: 20px;
-         color: white;
-         font-family: 'Arial', sans-serif;">
-        <!-- Knot of the ribbon -->
-        <div style="
-             position: absolute;
-             top: -15px;
-             left: 50%;
-             transform: translateX(-50%);
-             background: #f39c12;
-             width: 40px;
-             height: 40px;
-             border-radius: 50%;
-             border: 3px solid white;">
+    <style>
+    .footer {
+        background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eac9);
+        background-size: 800% 800%;
+        animation: gradientAnimation 15s ease infinite;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+    }
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .footer-content p {
+        margin: 0;
+        font-size: 18px;
+    }
+    .footer-content .emoji {
+        font-size: 64px;
+        margin-top: 15px;
+    }
+    </style>
+    <div class="footer">
+        <div class="footer-content">
+            <p>Architect: Aniket Singh.<br>With the guidance of my professor Prof. Mukesh Rao Raghavendra</p>
+            <p class="emoji">🙏</p>
         </div>
-        <p style="margin: 10px 0 0 0; font-size: 18px;">Architect: Aniket Singh.</p>
-        <p style="margin: 5px 0 0 0; font-size: 16px;">With the guidance of my professor Prof. Mukesh Rao Raghavendra 🙏</p>
     </div>
-    """, unsafe_allow_html=True)
+    """, 
+    unsafe_allow_html=True
+)
+
 
