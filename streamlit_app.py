@@ -27,7 +27,7 @@ st.markdown("""
         body {
             color: #ffffff !important;
         }
-        /* Set a dark grey background for the app */
+        /* Set a light grey background for the app */
         .stApp {
             background-color: #333333;
         }
