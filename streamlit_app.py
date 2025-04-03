@@ -393,7 +393,7 @@ st.markdown(
     <div class="footer">
         <div class="footer-content">
             <p>Architect: Aniket Singh.<br>With the guidance of my professor Prof. Mukesh Rao Raghavendra</p>
-            <p class="emoji"></p>
+            <p class="emoji">🙏</p>
         </div>
     </div>
     """, 
